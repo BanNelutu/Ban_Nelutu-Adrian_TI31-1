@@ -6,14 +6,12 @@ import org.w3c.dom.Node;
 import java.io.File;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+
 void main() throws Exception{
-    String plus=",.?/;:{}123456789'0|+=-_(){}[]";
-    char[] puctuatie= plus.toCharArray();
+
     Integer nrFis = 2917;
     String path = "C:\\Users\\nelut\\IdeaProjects\\Ban_Nelutu-Adrian_TI31-1\\LabExtragere\\src\\Reuters\\Reuters_34\\Training\\"+nrFis.toString()+"NEWS.XML";
-int nrFisiere=0;    //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-    // to see how IntelliJ IDEA suggests fixing it.
+    int nrFisiere=0;
     File xmlFile = new File(path);
     File textFisier = new File(nrFis.toString()+"NEWS.txt");
     FileWriter myWriter = new FileWriter(nrFis.toString()+"NEWS.txt");
@@ -32,27 +30,46 @@ int nrFisiere=0;    //TIP Press <shortcut actionId="ShowIntentionActions"/> with
     // Access elements by tag name
     NodeList titlelist = document.getElementsByTagName("title");
     Node title  = titlelist.item(0);
-    String finishTitle= title.getTextContent();
-    int nrlitere= finishTitle.length();
-    char[] finish = finishTitle.toCharArray();
-    myWriter.write(finish.toString().toLowerCase());
-    for(int y =0;y<nrlitere-1;y++){
-        for(int j=0;j<puctuatie.length-1;j++){
-        if(finish[y]==puctuatie[j]){
-            finish[y]=' ';
-            j=0;
-        }
-        }
+    String finishTitle= title.getTextContent().toLowerCase();
+    myWriter.write(scoatePunctuatie(finishTitle));
+    myWriter.write("\n");
 
-    }
 
-    myWriter.write(finish.toString().toLowerCase());
     NodeList nodeList = document.getElementsByTagName("p");
     for (int i = 0; i < nodeList.getLength(); i++) {
         Node node = nodeList.item(i);
-        myWriter.write(node.getTextContent().toLowerCase());
+        String text = node.getTextContent().toLowerCase();
+        myWriter.write(scoatePunctuatie(text));
+        myWriter.write("\n");
     }
 
 
     myWriter.close();
+}
+char[] scoatePunctuatie(String text) {
+    String plus = "<>*&^%$#@!`~*,.?/;:{}123456789'0|+=-_(){}[]\\\"";
+    char[] puctuatie = plus.toCharArray();
+    boolean ePunctuatie = true;
+    char[] finish = text.toCharArray();
+    char[] gata =new char[text.length()];
+    char[] v2finish;
+    int indexGata = 0;
+
+    for (int y = 0; y < text.length() - 1; ) {
+        for (int j = 0; j < puctuatie.length; j++) {
+            if (finish[y] != puctuatie[j]) ePunctuatie = false;
+            else {
+                ePunctuatie = true;
+                break;
+            }
+        }
+        if (ePunctuatie) y++;
+        else gata[indexGata++] = finish[y++];
+    }
+    v2finish= new char[indexGata];
+
+    for(int i=0; i<indexGata;i++){
+        v2finish[i]=gata[i];
+    }
+    return v2finish;
 }
