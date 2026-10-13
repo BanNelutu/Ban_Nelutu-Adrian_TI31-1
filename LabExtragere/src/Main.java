@@ -8,43 +8,45 @@ import java.io.File;
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 
 void main() throws Exception{
-
     Integer nrFis = 2917;
-    String path = "C:\\Users\\nelut\\IdeaProjects\\Ban_Nelutu-Adrian_TI31-1\\LabExtragere\\src\\Reuters\\Reuters_34\\Training\\"+nrFis.toString()+"NEWS.XML";
-    int nrFisiere=0;
-    File xmlFile = new File(path);
-    File textFisier = new File(nrFis.toString()+"NEWS.txt");
-    FileWriter myWriter = new FileWriter(nrFis.toString()+"NEWS.txt");
-    if(textFisier.createNewFile()){
-        nrFisiere++;
-        System.out.println("Fisierul cu nr "+nrFisiere +" a fost creat");
-    }
+   for (nrFis=2917; nrFis<5698;nrFis++){
+        String path = "C:\\Users\\nelut\\IdeaProjects\\Ban_Nelutu-Adrian_TI31-1\\LabExtragere\\src\\Reuters\\Reuters_34\\Training\\"+nrFis.toString()+"NEWS.XML";
+        int nrFisiere=0;
+        File xmlFile = new File(path);
+        if(xmlFile.exists()){
+            File textFisier = new File(nrFis.toString()+"NEWS.txt");
+            FileWriter myWriter = new FileWriter(nrFis.toString()+"NEWS.txt");
 
-    // Create a DocumentBuilder
-    DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-    DocumentBuilder builder = factory.newDocumentBuilder();
+            if(textFisier.createNewFile()){
 
-    // Parse the XML file
-    Document document = builder.parse(xmlFile);
+                System.out.println("Fisierul cu nr "+nrFisiere++ +" a fost creat");
+            }
 
-    // Access elements by tag name
-    NodeList titlelist = document.getElementsByTagName("title");
-    Node title  = titlelist.item(0);
-    String finishTitle= title.getTextContent().toLowerCase();
-    myWriter.write(scoatePunctuatie(finishTitle));
-    myWriter.write("\n");
+            // Create a DocumentBuilder
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder builder = factory.newDocumentBuilder();
 
+            // Parse the XML file
+            Document document = builder.parse(xmlFile);
 
-    NodeList nodeList = document.getElementsByTagName("p");
-    for (int i = 0; i < nodeList.getLength(); i++) {
-        Node node = nodeList.item(i);
-        String text = node.getTextContent().toLowerCase();
-        myWriter.write(scoatePunctuatie(text));
-        myWriter.write("\n");
-    }
+            // Access elements by tag name
+            NodeList titlelist = document.getElementsByTagName("title");
+            Node title  = titlelist.item(0);
+            String finishTitle= title.getTextContent().toLowerCase();
+            myWriter.write(scoatePunctuatie(finishTitle));
+            myWriter.write("\n");
 
 
-    myWriter.close();
+            NodeList nodeList = document.getElementsByTagName("p");
+            for (int i = 0; i < nodeList.getLength(); i++) {
+                Node node = nodeList.item(i);
+                String text = node.getTextContent().toLowerCase();
+                myWriter.write(scoatePunctuatie(text));
+                myWriter.write("\n");
+            }
+            myWriter.close();
+        }
+   }
 }
 char[] scoatePunctuatie(String text) {
     String plus = "<>*&^%$#@!`~*,.?/;:{}123456789'0|+=-_(){}[]\\\"";
