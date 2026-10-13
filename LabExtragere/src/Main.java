@@ -8,19 +8,13 @@ import java.io.File;
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 
 void main() throws Exception{
-    Integer nrFis = 2917;
+    int nrFis;
    for (nrFis=2917; nrFis<5698;nrFis++){
-        String path = "C:\\Users\\nelut\\IdeaProjects\\Ban_Nelutu-Adrian_TI31-1\\LabExtragere\\src\\Reuters\\Reuters_34\\Training\\"+nrFis.toString()+"NEWS.XML";
-        int nrFisiere=0;
+        String path = "C:\\Users\\nelut\\IdeaProjects\\Ban_Nelutu-Adrian_TI31-1\\LabExtragere\\src\\Reuters\\Reuters_34\\Training\\"+nrFis+"NEWS.XML";
         File xmlFile = new File(path);
         if(xmlFile.exists()){
-            File textFisier = new File(nrFis.toString()+"NEWS.txt");
-            FileWriter myWriter = new FileWriter(nrFis.toString()+"NEWS.txt");
+            FileWriter myWriter = new FileWriter(nrFis+"NEWS.txt");
 
-            if(textFisier.createNewFile()){
-
-                System.out.println("Fisierul cu nr "+nrFisiere++ +" a fost creat");
-            }
 
             // Create a DocumentBuilder
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
